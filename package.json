@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodemon ./routes/index.js"
   },
   "keywords": [],
   "author": "",
@@ -12,5 +12,7 @@
   "dependencies": {
     "brainly-client": "^0.1.4",
     "express": "^4.17.1"
+  "devDependencies": {
+    "nodemon": "^2.0.3"
   }
 }
