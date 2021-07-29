@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express();
-const port = 8080;
+const port = process.env.port || 8080 || 5000 || 3000
 const cors = require("cors");
 const http = require("http");
 const https = require("https");
