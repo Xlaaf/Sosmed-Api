@@ -5,8 +5,6 @@ const cors = require("cors");
 const http = require("http");
 const https = require("https");
 const path = require("path")
-const Zahir = require('../utils')
-
 http.globalAgent.maxSockets = Infinity;
 https.globalAgent.maxSockets = Infinity;
 
@@ -23,77 +21,34 @@ app.get("/", (req, res) => {
   });
 });
 
-app.get("/api/tiktok", (req, res) => {
-    const url = req.query.url
+app.get("/br", (req, res) => {
+    const soal = req.query.soal
     res.setHeader("Cache-Control", "public,max-age=3600,s-maxage=30");
     setImmediate(() => {
       try {
-        if(url == '' || url == null){
+        if(soal == '' || soal == null){
           res.status(400).send({
             code: res.statusCode,
             success: false,
-            message: "Query Gak Boleh Kosong!",
-            creator: "Zhirrr"
+            message: "Soal Silahkan Diisi",
+            creator: "kurayantod"
           });
         }else{
-          Zahir.Tiktok(url)
-            .then((data) => {
-              res.json(data);
+          brainly.search(soal)
+          .then(questions => {
+                const question = questions[0]
+                const answer = question.answers[0]
+                res.json({
+                    status : true,
+                    creator : 'kanzaki',
+                    soal : question,
+                    jawaban : answer
+                })
             })
             .catch((err) => console.log(err));
         }
       } catch (e) {
-        res.status(400).send("Server Bermasalah Gan");
-      }
-    });
-});
-
-app.get("/api/ig", (req, res) => {
-    const url = req.query.url
-    res.setHeader("Cache-Control", "public,max-age=3600,s-maxage=30");
-    setImmediate(() => {
-      try {
-        if(url == '' || url == null){
-          res.status(400).send({
-            code: res.statusCode,
-            success: false,
-            message: "Query Gak Boleh Kosong!",
-            creator: "Zhirrr"
-          });
-        }else{
-          Zahir.IG(url)
-            .then((data) => {
-              res.json(data);
-            })
-            .catch((err) => console.log(err));
-        }
-      } catch (e) {
-        res.status(400).send("Server Bermasalah Gan");
-      }
-    });
-});
-
-app.get("/api/ig/stalk", (req, res) => {
-    const user = req.query.user
-    res.setHeader("Cache-Control", "public,max-age=3600,s-maxage=30");
-    setImmediate(() => {
-      try {
-        if(user == '' || user == null){
-          res.status(400).send({
-            code: res.statusCode,
-            success: false,
-            message: "Query Gak Boleh Kosong!",
-            creator: "Zhirrr"
-          });
-        }else{
-          Zahir.IGS(user)
-            .then((data) => {
-              res.json(data);
-            })
-            .catch((err) => console.log(err));
-        }
-      } catch (e) {
-        res.status(400).send("Server Bermasalah Gan");
+        res.status(400).send("Mungkin ada yang error");
       }
     });
 });
