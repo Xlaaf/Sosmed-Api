@@ -5,6 +5,8 @@ const cors = require("cors");
 const http = require("http");
 const https = require("https");
 const path = require("path")
+const Client = require('brainly-client')
+const brainly = new Client({ server: 'ID' }) // Spain server
 http.globalAgent.maxSockets = Infinity;
 https.globalAgent.maxSockets = Infinity;
 
